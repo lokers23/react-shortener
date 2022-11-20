@@ -16,7 +16,7 @@ interface IState<ILink>{
 
 const TableLinks: React.FC = () => {
   const navigation = useNavigate();
-  const [event, setEvent] = useState(false);//МОЖЕТ ПОПРОБОВАТЬ ДРУГОЙ ВИД const [, toogle] = useState()
+  const [event, setEvent] = useState(false);
   const [state, setState] = useState({
     loading: false,
     response:{} as IResponse<ILink[]>,
