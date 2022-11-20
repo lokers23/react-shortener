@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ILink } from '../modules/ILinks';
+import { ILink } from '../modules/ILink';
 
 export class UrlService{
 

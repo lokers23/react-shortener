@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { ILink } from '../modules/ILinks';
+import { ILink } from '../modules/ILink';
 import { UrlService } from '../services/UrlService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,7 +17,7 @@ export default function PutUpdateForm() {
   useEffect(()=>{
     let id:number = parseInt(params.id!);
     UrlService.getLinkById(id)
-    .then(response => setFormData(response.data))
+    .then(response => setFormData(response.data.data))
     .catch(error => console.log(error.message));
   },[]);
 

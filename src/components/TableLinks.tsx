@@ -1,37 +1,37 @@
 import React from 'react';
 import {useEffect, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { ILink } from '../modules/ILinks';
+import { ILink } from '../modules/ILink';
 import { UrlService } from '../services/UrlService';
 import '../styles/Links.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { IResponse } from '../modules/IResponse';
 
-interface IState{
+interface IState<ILink>{
   loading: boolean;
-  links: ILink[];
+  response: IResponse<ILink[]>;
   errorMsg: string;
 }
 
-const Links: React.FC = () => {
+const TableLinks: React.FC = () => {
   const navigation = useNavigate();
   const [event, setEvent] = useState(false);//МОЖЕТ ПОПРОБОВАТЬ ДРУГОЙ ВИД const [, toogle] = useState()
-  const [state, setState] = useState<IState>({
+  const [state, setState] = useState({
     loading: false,
-    links:[] as ILink[],
+    response:{} as IResponse<ILink[]>,
     errorMsg: ''
   });
 
   useEffect(() => {
     setState({...state, loading:true});
     UrlService.getLinks()
-    .then(response => setState({...state, loading:false, links:response.data}))
+    .then(response => {setState({...state, loading:false, response:response.data});})
     .catch(error => console.log({...state, loading:false, errorMsg:error.message}));
       
   },[event]);
 
-  const {loading, links, errorMsg} = state;
-
+  const {loading, response, errorMsg} = state;
 
   const deleteLink = (id:number) => {
 
@@ -62,7 +62,7 @@ const Links: React.FC = () => {
                 </tr>
             </thead>
             <tbody className='body-table'>
-            {links.length > 0 && links.map(link =>(
+            {response.data != null && response.data.length > 0 && response.data?.map(link =>(
                 <tr key={link.id}>
                     <td>{link.longUrl}</td>
                     <td>{link.shortUrl}</td>
@@ -71,7 +71,6 @@ const Links: React.FC = () => {
                     <td className='td-buttons'>
                         <button className='btn btn-warning mx-1 my-1' onClick={() => redirectToEditLink(link.id)}>Edit</button>
                         <button className='btn btn-danger mx-1 my-1' onClick={() => deleteLink(link.id)}>Delete</button>
-                        
                     </td>
                 </tr>
             ))}
@@ -81,4 +80,4 @@ const Links: React.FC = () => {
   );
 }
 
-export default Links;
+export default TableLinks;

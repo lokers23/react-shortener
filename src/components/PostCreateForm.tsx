@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { ILink } from '../modules/ILinks';
+import { ILink } from '../modules/ILink';
 import { UrlService } from '../services/UrlService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
